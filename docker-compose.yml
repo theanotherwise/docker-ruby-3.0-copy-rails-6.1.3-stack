@@ -28,8 +28,6 @@ services:
       POSTGRES_PASSWORD: rails
       POSTGRES_HOST_AUTH_METHOD: md5
       PGDATA: /var/lib/postgresql/data/pgdata
-    ports:
-      - 5432:5432
     volumes:
     - postgres-pgdata:/var/lib/postgresql/data/pgdata
 
