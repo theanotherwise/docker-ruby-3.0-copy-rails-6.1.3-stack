@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  httpd: # httpd:2.4.46
+    build:
+      context: ./httpd
+    container_name: httpd
+    ports:
+      - 8080:80
+    depends_on:
+      - rails
+  rails: # ruby:3.0.0-alpine3.13
+    build:
+      context: ./rails
+    container_name: rails
+    environment:
+      RAILS_ENV: development
+      RAILS_SERVE_STATIC_FILES: 'true'
+      RAILS_LOG_TO_STDOUT: 'true'
+    volumes:
+      - ./app:/app:ro
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:13.2
+    container_name: postgres
+    environment:
+      POSTGRES_DB: rails
+      POSTGRES_USER: rails
+      POSTGRES_PASSWORD: rails
+      POSTGRES_HOST_AUTH_METHOD: md5
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
+    volumes:
+    - postgres-pgdata:/var/lib/postgresql/data/pgdata
+
+volumes:
+  postgres-pgdata:
