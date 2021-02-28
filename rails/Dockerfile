@@ -1,9 +1,9 @@
 FROM ruby:3.0.0-alpine3.13
 
-RUN apk add --no-cache libxml2 libxslt build-base libxml2-dev libxslt-dev postgresql-dev tzdata nodejs yarn && \
-    gem update --system
+RUN apk add --no-cache libxml2 libxslt build-base libxml2-dev libxslt-dev postgresql-dev tzdata nodejs yarn
 
-RUN gem install nokogiri --platform=ruby -- --use-system-libraries
+RUN gem update --system && \
+    gem install nokogiri --platform=ruby -- --use-system-libraries    
 
 WORKDIR /app
 # COPY ./app .
